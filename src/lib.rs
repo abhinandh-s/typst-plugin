@@ -56,7 +56,7 @@ pub fn complex_data(arg: &[u8]) -> Vec<u8> {
 }
 
 #[wasm_func]
-pub fn set_to_a(arg: &mut [u8]) -> Vec<u8> {
+pub fn set_to_a(arg: &[u8]) -> Vec<u8> {
     for c in &mut *arg {
         *c = b'a';
     }
@@ -64,7 +64,7 @@ pub fn set_to_a(arg: &mut [u8]) -> Vec<u8> {
 }
 
 #[wasm_func]
-pub fn set_to_a_reuse_buffer(arg: &mut [u8]) -> &[u8] {
+pub fn set_to_a_reuse_buffer(arg: &[u8]) -> &[u8] {
     for c in &mut *arg {
         *c = b'a';
     }
