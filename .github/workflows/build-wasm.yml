@@ -1,0 +1,38 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install wasm32 target
+        run: rustup target add wasm32-unknown-unknown
+ 
+      - uses: typst-community/setup-typst@v3
+        with:
+          typst-version: '0.14.2'
+      - run: |
+          typst --version
+          cargo build --release --target wasm32-unknown-unknown
+          mkdir -p plugin
+          mv -f ./target/wasm32-unknown-unknown/release/hello.wasm plugin/
+          typst compile hello.typ 
+          
+      - name: Commit generated files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        # Adding continue-on-error temporarily so the workflow doesn't fail 
+        # while we are just trying to read the tree output!
+        continue-on-error: true 
+        with:
+          commit_message: "chore: compile typst to bundle"
+          add_options: '-f'
+          file_pattern: 'plugin/' 
