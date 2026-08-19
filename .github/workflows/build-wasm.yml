@@ -24,7 +24,7 @@ jobs:
           typst --version
           cargo build --release --target wasm32-unknown-unknown
           mkdir -p plugin
-          mv -f ./target/wasm32-unknown-unknown/release/hello.wasm plugin/
+          mv -f ./target/wasm32-unknown-unknown/release/last_changed.wasm plugin/
           typst compile hello.typ 
           
       - name: Commit generated files
