@@ -2,7 +2,7 @@
 //! Before that, decoding CBOR used a different function.
 
 #{
-  let p = plugin("./plugin/hello.wasm")
+  let p = plugin("./plugin/last_changed.wasm")
 
   assert.eq(str(p.hello()), "Hello from Wasm!!!")
   assert.eq(str(p.double_it(bytes("abc"))), "abcabc")
